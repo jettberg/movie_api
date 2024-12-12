@@ -18,7 +18,7 @@ app.use(morgan('dev'));
       {
         id:2, 
         name: "Joe",
-        favoriteMovies: []
+        favoriteMovies: ["Inception"]
       },
 
     ];
@@ -194,9 +194,9 @@ app.get('/movies/:title', (req, res) => {
 });
 app.get('/movies/genre/:genreName', (req, res) => {
   const { genreName } = req.params;
-  const genre = movies.filter(movie => movie.Genre.Name.toLowerCase() === genreName.toLowerCase()).Genre;
+  const genre = movies.find(movie => movie.Genre.Name.toLowerCase() === genreName.toLowerCase()).Genre;
 
-  if (genre.length > 0) {
+  if (genre) {
     res.status(200).json(genre);
   } else {
     res.status(400).send('no such genre')
@@ -245,20 +245,47 @@ app.put('/users/:id', (req, res) => {
     res.status(400).send('user not found')
   }
 });
-// app.('/users/:id', (req, res) => {
-//   const { id } = req.params;
-//   const updatedUser = req.body;
-//   let user = users.find( user => user.id == id);
+app.post('/users/:id/:movieTitle', (req, res) => {
+  const { id, movieTitle } = req.params;
 
-//   if (user) {
-//     user.name = updatedUser.name;
-//     res.status(200).json(user);
-//   } else {
-//     res.status(400).send('user not found')
-//   }
-// });
+  let user = users.find( user => user.id == id);
+
+  if (user) {
+    user.favoriteMovies.push(movieTitle);
+    res.status(200).send(`${movieTitle} has been added to ${id}'s array`);
+  } else {
+    res.status(400).send('user not found')
+  }
+});
 
 
+
+
+//DELETE commands
+app.delete('/users/:id/:movieTitle', (req, res) => {
+  const { id, movieTitle } = req.params;
+
+  let user = users.find( user => user.id == id);
+
+  if (user) {
+    user.favoriteMovies = user.favoriteMovies.filter(title => title !== movieTitle);
+    res.status(200).send(`${movieTitle} has been removed from ${id}'s array`);
+  } else {
+    res.status(400).send('user not found')
+  }
+});
+app.delete('/users/:id', (req, res) => {
+  const { id } = req.params;
+
+  let user = users.find( user => user.id == id);
+
+  if (user) {
+    users = users.filter(user => user.id != id);
+    res.status(200).send(`user ${id} has been deleted`);
+  } else {
+    res.status(400).send('user not found')
+  }
+});
 
 
 

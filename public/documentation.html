@@ -2,75 +2,186 @@
 <html lang="en" dir="ltr">
 
 <head>
-    <meta charset="utf-8">
-    <title>Documentation</title>
+  <meta charset="utf-8">
+  <title>Documentation</title>
 </head>
 
 <body>
-    <h1>Documentation Page</h1>
-    <ul>
-        <li>GET all movies
-            <p>app.get('/movies', (req, res) => {
-                res.status(200).json(favMovies);
-                });<br><br>
-                where '/movies' is the endpoint<br>
-                'app.get' pulls information through express<br>
-                'res.status(200).json(favMovies)' is the response (given the status is okay) in json format of all of the movies and all of their subsequent data.</p>
-        </li>
-        <li>GET movie by title
-            <p>app.get('/movies/:title', (req, res) => {
-                const { title } = req.params;
-                const movie = movies.find(movie => movie.title.toLowerCase() === title.decodedTitle.toLowerCase());
-            
-                if (movie) {
-                  res.status(200).json(movie);
-                } else {
-                  res.status(400).send('no such movie')
-                }
-            });<br><br>
-                where '/movies/:title' is the endpoint<br>
-                'app.get' pulls information through express<br>
-                setting the variable of 'title' to be what is being searched through the endpoint of the URL request: the title.
-                <br> then it uses the find method (movies.find()) that takes the title of the movie in the given array and resolves it into that variable.
-                the if else statement then returns the data based on if it is successful (status(200)), or returns an error if it was unsuccessful (status(400)).
-            </p></li>
-            <li>CREATE new user
-                <p>app.post('/users', (req, res) => {
-                    const newUser = req.body;
-                  
-                    if (newUser.name) {
-                      newUser.id = uuid.v4();
-                      users.push(newUser);
-                      res.status(201).json(newUser)
-                    } else {
-                      res.status(400).send('We need a name!')
-                    }
-                  });<br><br>
-                    where '/users' is the endpoint<br>
-                    'app.post' in conjunction with the newUser being assigned to 'req.body' uses the body-parser module to be able to send data through json to update a given array<br>
-                    then the if else statement uses the uuid package to create a unique id for each given object, pushing it to the array using the 201 status to show it was successfully created or error 400 for a bad request
-                </p>
-                  </li>
-                  <li>UPDATE user information
-                    <p>app.put('/users/:id', (req, res) => {
-                        const { id } = req.params;
-                        const updatedUser = req.body;
-                        let user = users.find( user => user.id == id);
-                      
-                        if (user) {
-                          user.name = updatedUser.name;
-                          res.status(200).json(user);
-                        } else {
-                          res.status(400).send('user not found')
-                        }
-                      });<br><br>
-                        where '/users:id' is the endpoint<br>
-                      using 'app.put' as the http put request which replaces certain information. <br>
-                      'let user' allows for a change for the *updated name (which would be the req.body)<br>
-                      then the if else statement takes the old userName and replaces it with the updatedName giving a status check, or else sending back an error if that is not the case
-                    </p>
-                      </li>
-    </ul>
+  <h1>Documentation Page</h1>
+  <ul>
+    <li>GET all movies
+      <p>app.get('/movies', (req, res) => {
+        res.status(200).json(favMovies);
+        });<br><br>
+        where '/movies' is the endpoint<br>
+        'app.get' pulls information through express<br>
+        'res.status(200).json(favMovies)' is the response (given the status is okay) in json format of all of the movies
+        and all of their subsequent data.</p>
+    </li><br>
+    <li>GET movie by title
+      <p>app.get('/movies/:title', (req, res) => {
+        const { title } = req.params;
+        const movie = movies.find(movie => movie.title.toLowerCase() === title.decodedTitle.toLowerCase());
+
+        if (movie) {
+        res.status(200).json(movie);
+        } else {
+        res.status(400).send('no such movie')
+        }
+        });<br><br>
+        where '/movies/:title' is the endpoint<br>
+        'app.get' pulls information through express<br>
+        setting the variable of 'title' to be what is being searched through the endpoint of the URL request: the title.
+        <br> then it uses the find method (movies.find()) that takes the title of the movie in the given array and
+        resolves it into that variable.
+        the if else statement then returns the data based on if it is successful (status(200)), or returns an error if
+        it was unsuccessful (status(400)).
+      </p>
+    </li><br>
+    <li>
+      GET genre
+
+      <p>
+        app.get('/movies/genre/:genreName', (req, res) => {
+        const { genreName } = req.params;
+        const genre = movies.find(movie => movie.Genre.Name.toLowerCase() === genreName.toLowerCase()).Genre;
+
+        if (genre) {
+        res.status(200).json(genre);
+        } else {
+        res.status(400).send('no such genre')
+        }
+        });<br><br>
+        where /movies/genre/:genreName' is the endpoint, and the process of fetching the data is through the app.get
+        method<br>
+        it sets the name of the genre to what is being asked in the url, then uses the .find command to filter through
+        the array to find the matching object, sending it back in json format with a completion, or failure message
+      </p>
+    </li><br>
+
+    <li>
+      GET director information
+      <p>
+        app.get('/movies/director/:directorName', (req, res) => {
+          const { directorName } = req.params;
+          const director = movies.find(movie => movie.Director.Name.toLowerCase() === directorName.toLowerCase()).Director;
+        
+          if (director) {
+            res.status(200).json(director);
+          } else {
+            res.status(400).send('no such director')
+          }
+        });<br><br>
+        where '/movies/director/:directorName' is the endpoint, and the code works basically the exact same as the last one, pulling genre information.
+      </p>
+    </li>
+
+    <li>CREATE new user
+      <p>app.post('/users', (req, res) => {
+        const newUser = req.body;
+
+        if (newUser.name) {
+        newUser.id = uuid.v4();
+        users.push(newUser);
+        res.status(201).json(newUser)
+        } else {
+        res.status(400).send('We need a name!')
+        }
+        });<br><br>
+        where '/users' is the endpoint<br>
+        'app.post' in conjunction with the newUser being assigned to 'req.body' uses the body-parser module to be able
+        to send data through json to update a given array<br>
+        then the if else statement uses the uuid package to create a unique id for each given object, pushing it to the
+        array using the 201 status to show it was successfully created or error 400 for a bad request
+      </p>
+    </li><br>
+    <li>UPDATE user information
+      <p>app.put('/users/:id', (req, res) => {
+        const { id } = req.params;
+        const updatedUser = req.body;
+        let user = users.find( user => user.id == id);
+
+        if (user) {
+        user.name = updatedUser.name;
+        res.status(200).json(user);
+        } else {
+        res.status(400).send('user not found')
+        }
+        });<br><br>
+        where '/users:id' is the endpoint<br>
+        using 'app.put' as the http put request which replaces certain information. <br>
+        'let user' allows for a change for the *updated name (which would be the req.body)<br>
+        then the if else statement takes the old userName and replaces it with the updatedName giving a status check, or
+        else sending back an error if that is not the case
+      </p>
+    </li><br>
+    <li>
+      UPDATE users favorite movie(s)
+      <p>
+        app.post('/users/:id/:movieTitle', (req, res) => {
+        const { id, movieTitle } = req.params;
+
+        let user = users.find( user => user.id == id);
+
+        if (user) {
+        user.favoriteMovies.push(movieTitle);
+        res.status(200).send(`${movieName} has been added to ${id}'s array`);
+        } else {
+        res.status(400).send('user not found')
+        }
+        });<br><br>
+        where the endpoint would be /users/:id/:movieTitle'- the id and the movie title being specifically targeted<br>
+        using 'app.post' sends in a new input in the form of a body, which targets the created array and replaces the
+        targeted information with what is supplied via json format<br>
+        then, the if else statement takes the new data in the 'favorite movies' array, pushes it into the existing
+        array, and if it works correctly gives a success message, else it gives an error message
+      </p>
+    </li><br>
+    <li>
+      DELETE movies from array
+      <p>
+        app.delete('/users/:id/:movieTitle', (req, res) => {
+        const { id, movieTitle } = req.params;
+
+        let user = users.find( user => user.id == id);
+
+        if (user) {
+        user.favoriteMovies = user.favoriteMovies.filter(title => title !== movieTitle);
+        res.status(200).send(`${movieTitle} has been removed from ${id}'s array`);
+        } else {
+        res.status(400).send('user not found')
+        }
+        });<br><br>
+        where the endpoint would be the same as the last, /users/:id/:movieTitle'
+        and the process is just the opposite of the last one, where app.delete is telling express to delete some
+        information<br>
+        using the filter command to update the array to use the !== the names of other movies in the list, sending a
+        message back regarding if the process worked or did not work.
+      </p>
+    </li><br>
+    <li>
+      DELETE user from user list
+    </li>
+    <p>
+      app.delete('/users/:id', (req, res) => {
+      const { id } = req.params;
+
+      let user = users.find( user => user.id == id);
+
+      if (user) {
+      users = users.filter(user => user.id != id);
+      res.status(200).send(`user ${id} has been deleted`);
+      } else {
+      res.status(400).send('user not found')
+      }
+      });<br><br>
+      This one is similar to the last again, the endpoint being /users/:id'.<br>
+      the process is also a deletion, searching the user and matching the given id to the one searched, then the if else
+      statement updates the list by checking to make sure the list that we have does NOT include the given id number,
+      sending back a message saying that that ID has successfully been taken off
+    </p>
+
+  </ul>
 </body>
 
 
