@@ -173,6 +173,40 @@
       </p>
     </li><br>
 
+    <li>GET movies by genre and director
+      <p>app.get('/movies/genre/:genreName/director/:directorName', (req, res) =&gt; {<br>
+        const { genreName, directorName } = req.params;<br>
+        const moviesByGenreAndDirector = movies.filter(movie =&gt; movie.genre.toLowerCase() === genreName.toLowerCase() && movie.director.toLowerCase() === directorName.toLowerCase());<br><br>
+
+        if (moviesByGenreAndDirector.length "larger" 0) {<br>
+        res.status(200).json(moviesByGenreAndDirector);<br>
+        } else {<br>
+        res.status(400).send('No movies found with this genre and director combination');<br>
+        }<br>
+        });<br><br>
+        where '/movies/genre/:genreName/director/:directorName' is the endpoint.<br>
+        The query returns movies that match both a specified genre and director.<br>
+      </p>
+    </li><br>
+
+    <li>UPDATE movie description
+      <p>app.put('/movies/:title/description', (req, res) =&gt; {<br>
+        const { title } = req.params;<br>
+        const { description } = req.body;<br>
+        let movie = movies.find(movie =&gt; movie.title.toLowerCase() === title.toLowerCase());<br><br>
+
+        if (movie) {<br>
+        movie.description = description;<br>
+        res.status(200).json(movie);<br>
+        } else {<br>
+        res.status(400).send('Movie not found');<br>
+        }<br>
+        });<br><br>
+        where '/movies/:title/description' is the endpoint.<br>
+        This allows the updating of the description of a given movie.<br>
+      </p>
+    </li><br>
+
   </ul>
 </body>
 
