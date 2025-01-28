@@ -8,9 +8,14 @@ const mongoose = require('mongoose');
 const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+const Genres = Models.Genre;
+const Directors = Models.Director;
 
-//to start up nodemon the command is: ./node_modules/.bin/nodemon index.js
+mongoose.connect('mongodb://localhost:27017/myFlix', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error('MongoDB connection error:', err));
+
+
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -175,7 +180,7 @@ const movies = [
 
 
 app.get('/', (req, res) => {
-  res.status(200).send('Welcome to my movie collection!');
+  res.status(200).send('Welcome to my myFlix!');
 });
 app.get('/documentation', (req, res) => {
   res.status(200).sendFile('documentation.html', { root: __dirname + '/public' });
@@ -185,19 +190,49 @@ app.get('/documentation', (req, res) => {
 
 
 //READ commands
-app.get('/movies', (req, res) => {
-  res.status(200).json(movies);
-});
-app.get('/movies/:title', (req, res) => {
-  const { title } = req.params;
-  const movie = movies.filter(movie => movie.title.toLowerCase() === title.toLowerCase());
 
-  if (movie) {
-    res.status(200).json(movie);
-  } else {
-    res.status(400).send('no such movie')
-  }
+
+//OLD:
+// app.get('/movies', (req, res) => {
+//   res.status(200).json(movies);
+// });
+app.get('/movies', (req, res) => {
+  Movies.find()
+    .then((movies) => {
+      res.status(201).json(movies);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
+
+//GET movies by their titles,
+//OLD CODE (use for comparison)
+// app.get('/movies/:title', (req, res) => {
+//   const { title } = req.params;
+//   const movie = movies.filter(movie => movie.title.toLowerCase() === title.toLowerCase());
+
+//   if (movie) {
+//     res.status(200).json(movie);
+//   } else {
+//     res.status(400).send('no such movie')
+//   }
+// });
+app.get('/movies/:title', (req, res) => {
+  Movies.findOne({ title: req.params.title })
+    .then((movie) => {
+      res.json(movie);
+    })
+    .catch((err) =>{
+      console.error(err);
+      res.status(500).send("Error " + err);
+    });
+});
+
+
+
+
 app.get('/movies/genre/:genreName', (req, res) => {
   const { genreName } = req.params;
   const genre = movies.find(movie => movie.Genre.Name.toLowerCase() === genreName.toLowerCase()).Genre;

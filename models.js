@@ -29,5 +29,22 @@ let userSchema = mongoose.Schema({
 let Movie = mongoose.model('Movie', movieSchema);
 let User = mongoose.model('User', userSchema);
 
-module.exports.Moive = Movie;
+let genreSchema = mongoose.Schema({
+    Name: {type: String, required: true},
+    Descritpion: {type: String, required: true}
+});
+
+let directorSchema= mongoose.Schema({
+    Name: {type: String, required: true},
+    Bio: {type: String, required: true},
+    Birthday: Date
+});
+
+let Genre = mongoose.model('Genre', genreSchema);
+let Director = mongoose.model('Director', directorSchema);
+
+
+module.exports.Movie = Movie;
 module.exports.User = User;
+module.exports.Genre = Genre;
+module.exports.Director = Director;
