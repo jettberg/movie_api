@@ -20,6 +20,11 @@ mongoose.connect('mongodb://localhost:27017/myFlix', { useNewUrlParser: true, us
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
+
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
+
 let users = [
   {
     id: 1,
@@ -196,7 +201,7 @@ app.get('/documentation', (req, res) => {
 // app.get('/movies', (req, res) => {
 //   res.status(200).json(movies);
 // });
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', {session: false}), async (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
@@ -367,7 +372,11 @@ app.post('/users/:id/:movieTitle', (req, res) => {
 });
 
 //The following is code that updates a users informtaion, expecting JSON format:
-app.put('/users/:Username', async (req, res) => {
+app.put('/users/:Username', passport.authenticate('jwt', {session: false}), async (req, res) => {
+  if(req.user.Username !== req.params.Username) {
+    return res.status(400).send('Permission denied');
+  }
+  
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
     $set:
     {
