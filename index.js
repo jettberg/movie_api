@@ -10,10 +10,29 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director;
+const {check, validationResult} = require('express-validator');
 
 mongoose.connect('mongodb://localhost:27017/myFlix', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
+
+
+const cors = require('cors');
+app.use(cors());
+
+//OTHERWISE I can use the following code that limits the requests to the API:
+// let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+// app.use(cors({
+//   origin: (origin, callback) => {
+//     if(!origin) return callback(null, true);
+//     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+//       let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+//       return callback(new Error(message ), false);
+//     }
+//     return callback(null, true);
+//   }
+// }));
 
 
 
@@ -315,7 +334,22 @@ app.get('/users/:Username', async (req, res) => {
     res.status(400).send('We need a name!')
   }
 });*/
-app.post('/users', async (req, res) => {
+app.post('/users', 
+  
+  [
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ],
+
+  async (req, res) => {
+    let errors = validationResults(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({errors: errors.array() });
+    }
+
+  let hashedPassword = Users.hashPassword(req.body.Password);
   await Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
@@ -324,7 +358,7 @@ app.post('/users', async (req, res) => {
         Users
           .create({
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: hashedPassword,
             Email: req.body.Email,
             Birhtday: req.body.Birhtday
           })
@@ -472,7 +506,12 @@ app.use((err, req, res, next) => {
 
 
 
+// This is the old app.listen() code before updating it to the heroku platform
+// app.listen(8080, () => {
+//   console.log('Your app is listening on port 8080.');
+// });
 
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+  console.log('Listening on port ' + port);
 });
