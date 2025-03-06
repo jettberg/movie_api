@@ -12,16 +12,24 @@ const Genres = Models.Genre;
 const Directors = Models.Director;
 const {check, validationResult} = require('express-validator');
 
-mongoose.connect('mongodb://localhost:27017/myFlix', { useNewUrlParser: true, useUnifiedTopology: true })
+// mongoose.connect('mongodb://localhost:27017/myFlix', { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then(() => console.log('Connected to MongoDB'))
+//   .catch((err) => console.error('MongoDB connection error:', err));
+
+//The code above was changed from the localhost of my computer to heroku/mongoDB in the following:
+
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
-
 
 const cors = require('cors');
 app.use(cors());
 
-//OTHERWISE I can use the following code that limits the requests to the API:
-// let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+
+
+
+
 
 // app.use(cors({
 //   origin: (origin, callback) => {
