@@ -37,7 +37,7 @@ userSchema.methods.validatePassword = function(password) {
     return bcrypt.compareSync(password, this.Password);
 };
 
-let Movie = mongoose.model('Movie', movieSchema, 'myFlix');
+let Movie = mongoose.model('Movie', movieSchema, 'movies');
 let User = mongoose.model('User', userSchema);
 
 let genreSchema = mongoose.Schema({
