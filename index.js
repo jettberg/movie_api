@@ -228,7 +228,7 @@ app.get('/documentation', (req, res) => {
 // app.get('/movies', (req, res) => {
 //   res.status(200).json(movies);
 // });
-app.get('/movies', passport.authenticate('jwt', {session: false}), async (req, res) => {
+app.get('/movies', async (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
