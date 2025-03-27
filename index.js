@@ -18,13 +18,12 @@ const {check, validationResult} = require('express-validator');
 
 //The code above was changed from the localhost of my computer to heroku/mongoDB in the following:
 
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.CONNECTION_URI, { serverSelectionTimeoutMS: 5000 })
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
 const cors = require('cors');
 app.use(cors());
-
 
 
 
