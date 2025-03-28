@@ -218,15 +218,6 @@ app.get('/documentation', (req, res) => {
 });
 
 
-
-
-//READ commands
-
-
-//OLD:
-// app.get('/movies', (req, res) => {
-//   res.status(200).json(movies);
-// });
 app.get('/movies', async (req, res) => {
   Movies.find()
     .then((movies) => {
@@ -238,18 +229,7 @@ app.get('/movies', async (req, res) => {
     });
 });
 
-//GET movies by their titles,
-//OLD CODE (use for comparison)
-// app.get('/movies/:title', (req, res) => {
-//   const { title } = req.params;
-//   const movie = movies.filter(movie => movie.title.toLowerCase() === title.toLowerCase());
 
-//   if (movie) {
-//     res.status(200).json(movie);
-//   } else {
-//     res.status(400).send('no such movie')
-//   }
-// });
 app.get('/movies/:title', (req, res) => {
   Movies.findOne({ title: req.params.title })
     .then((movie) => {
@@ -285,7 +265,7 @@ app.get('/movies/director/:directorName', (req, res) => {
   }
 });
 
-// Getting ALL of the user data in the following code:
+
 app.get('/users', async (req, res) => {
   await Users.find()
     .then((users) => {
@@ -320,27 +300,6 @@ app.get('/users/:Username', async (req, res) => {
 
 //CREATE commands
 
-//Adding a user
-/* We expect JSON in this format
-{
-  ID: Integer,
-  Username: String,
-  Password: String,
-  Email: String,
-  Birthday: Date
-}*/
-// Below is the OLD code that I was using before adding the logic of the database:
-/*app.post('/users', (req, res) => {
-  const newUser = req.body;
-
-  if (newUser.name) {
-    newUser.id = uuid.v4();
-    users.push(newUser);
-    res.status(201).json(newUser)
-  } else {
-    res.status(400).send('We need a name!')
-  }
-});*/
 app.post('/users', 
   
   [
@@ -436,6 +395,31 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}), asyn
       res.status(500).send('Error: ' + err);
     })
 
+});
+
+
+
+app.post('/directors', async (req, res) => {
+  const { Name, Bio, Birthday } = req.body;
+
+  try {
+    const existingDirector = await Director.findOne({ Name });
+    if (existingDirector) {
+      return res.status(400).send('Director already exists');
+    }
+
+    const newDirector = new Director({
+      Name,
+      Bio,
+      Birthday,
+    });
+
+    await newDirector.save();
+    return res.status(201).json(newDirector);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  }
 });
 
 //The following adds a specific movie to a users list of favorite movies:
