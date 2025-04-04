@@ -65,147 +65,6 @@ let users = [
 
 ];
 const movies = [
-//   {
-//     "Title": "Inception",
-//     "Description": "A skilled thief who steals corporate secrets through the use of dream-sharing technology is given the chance to have his criminal record erased if he can successfully perform an inception.",
-//     "Genre": {
-//       "Name": "Science Fiction, Action, Thriller",
-//       "Description": "In film and television, Science Fiction is a genre that uses speculative, futuristic, or imaginative concepts to explore possible futures, other worlds, or advanced technology."
-//     },
-//     "Director": {
-//       "Name": "Christopher Nolan",
-//       "Bio": "Christopher Nolan is a British-American filmmaker known for his complex narratives and visual storytelling. He has directed iconic films like The Dark Knight trilogy and Inception.",
-//       "Birth": "July 30, 1970"
-//     },
-//     "Featured": false
-//   },
-//   {
-//     "Title": "The Lord of the Rings: The Fellowship of the Ring",
-//     "Description": "A young hobbit, Frodo Baggins, is tasked with the responsibility of destroying the powerful One Ring in the fires of Mount Doom, accompanied by a group of companions.",
-//     "Genre": {
-//       "Name": "Fantasy, Adventure",
-//       "Description": "Fantasy is a genre of speculative fiction involving magical elements, mythical creatures, and supernatural occurrences, while Adventure stories focus on the pursuit of exciting and often dangerous quests."
-//     },
-//     "Director": {
-//       "Name": "Peter Jackson",
-//       "Bio": "Peter Jackson is a New Zealand filmmaker best known for directing The Lord of the Rings trilogy and The Hobbit series, both adapted from J.R.R. Tolkien's novels.",
-//       "Birth": "October 31, 1961"
-//     },
-//     "Featured": true
-//   },
-//   {
-//     "Title": "The Lord of the Rings: The Two Towers",
-//     "Description": "Frodo and Sam continue their perilous journey to Mount Doom, while the remaining members of the Fellowship prepare for war against the forces of Sauron.",
-//     "Genre": {
-//       "Name": "Fantasy, Adventure",
-//       "Description": "Fantasy is a genre of speculative fiction involving magical elements, mythical creatures, and supernatural occurrences, while Adventure stories focus on the pursuit of exciting and often dangerous quests."
-//     },
-//     "Director": {
-//       "Name": "Peter Jackson",
-//       "Bio": "Peter Jackson is a New Zealand filmmaker best known for directing The Lord of the Rings trilogy and The Hobbit series, both adapted from J.R.R. Tolkien's novels.",
-//       "Birth": "October 31, 1961"
-//     },
-//     "Featured": true
-//   },
-//   {
-//     "Title": "The Lord of the Rings: The Return of the King",
-//     "Description": "The final battle to destroy the One Ring takes place as Frodo struggles to reach Mount Doom while the armies of Middle-Earth fight to hold off Sauron's forces.",
-//     "Genre": {
-//       "Name": "Fantasy, Adventure",
-//       "Description": "Fantasy is a genre of speculative fiction involving magical elements, mythical creatures, and supernatural occurrences, while Adventure stories focus on the pursuit of exciting and often dangerous quests."
-//     },
-//     "Director": {
-//       "Name": "Peter Jackson",
-//       "Bio": "Peter Jackson is a New Zealand filmmaker best known for directing The Lord of the Rings trilogy and The Hobbit series, both adapted from J.R.R. Tolkien's novels.",
-//       "Birth": "October 31, 1961"
-//     },
-//     "Featured": true
-//   },
-//   {
-//     "Title": "The Hobbit: An Unexpected Journey",
-//     "Description": "Bilbo Baggins, a hobbit, embarks on a journey with a group of dwarves to reclaim a stolen treasure from the dragon Smaug.",
-//     "Genre": {
-//       "Name": "Fantasy, Adventure",
-//       "Description": "Fantasy is a genre of speculative fiction involving magical elements, mythical creatures, and supernatural occurrences, while Adventure stories focus on the pursuit of exciting and often dangerous quests."
-//     },
-//     "Director": {
-//       "Name": "Peter Jackson",
-//       "Bio": "Peter Jackson is a New Zealand filmmaker best known for directing The Lord of the Rings trilogy and The Hobbit series, both adapted from J.R.R. Tolkien's novels.",
-//       "Birth": "October 31, 1961"
-//     },
-//     "Featured": false
-//   },
-//   {
-//     "Title": "The Hobbit: The Desolation of Smaug",
-//     "Description": "Bilbo Baggins and the dwarves continue their journey to reclaim the treasure of the Lonely Mountain, encountering danger and the dragon Smaug.",
-//     "Genre": {
-//       "Name": "Fantasy",
-//       "Description": "Fantasy is a genre of speculative fiction involving magical elements, mythical creatures, and supernatural occurrences, while Adventure stories focus on the pursuit of exciting and often dangerous quests."
-//     },
-//     "Director": {
-//       "Name": "Peter Jackson",
-//       "Bio": "Peter Jackson is a New Zealand filmmaker best known for directing The Lord of the Rings trilogy and The Hobbit series, both adapted from J.R.R. Tolkien's novels.",
-//       "Birth": "October 31, 1961"
-//     },
-//     "Featured": false
-//   },
-//   {
-//     "Title": "The Hobbit: The Battle of the Five Armies",
-//     "Description": "The final chapter of the Hobbit trilogy, where Bilbo Baggins and his companions must face the repercussions of their actions as the forces of good and evil converge for the Battle of the Five Armies.",
-//     "Genre": {
-//       "Name": "Fantasy, Adventure",
-//       "Description": "Fantasy is a genre of speculative fiction involving magical elements, mythical creatures, and supernatural occurrences, while Adventure stories focus on the pursuit of exciting and often dangerous quests."
-//     },
-//     "Director": {
-//       "Name": "Peter Jackson",
-//       "Bio": "Peter Jackson is a New Zealand filmmaker best known for directing The Lord of the Rings trilogy and The Hobbit series, both adapted from J.R.R. Tolkien's novels.",
-//       "Birth": "October 31, 1961"
-//     },
-//     "Featured": false
-//   },
-//   {
-//     "Title": "Spaceman",
-//     "Description": "A space explorer must navigate life in an isolated mission on a distant planet, facing both external dangers and his internal battles. Adam Sandler plays a comedic yet emotional lead role.",
-//     "Genre": {
-//       "Name": "Comedy, Sci-Fi, Drama",
-//       "Description": "Comedy is a genre of film designed to entertain and make the audience laugh, Sci-Fi involves speculative futuristic concepts, and Drama explores emotional themes with a focus on character development."
-//     },
-//     "Director": {
-//       "Name": "Jonah Hill",
-//       "Bio": "Jonah Hill is an American actor, director, producer, and writer, known for his roles in films like Superbad, 21 Jump Street, and his directorial debut, Mid90s.",
-//       "Birth": "December 20, 1983"
-//     },
-//     "Featured": false
-//   },
-//   {
-//     "Title": "The Martian",
-//     "Description": "Astronaut Mark Watney becomes stranded on Mars and must figure out how to survive while awaiting rescue. A gripping survival story of ingenuity and hope.",
-//     "Genre": {
-//       "Name": "Science Fiction, Drama",
-//       "Description": "Science Fiction involves imaginative future scenarios often dealing with advanced technologies or alien life, while Drama focuses on realistic storytelling and emotional conflict."
-//     },
-//     "Director": {
-//       "Name": "Ridley Scott",
-//       "Bio": "Ridley Scott is an English director, producer, and screenwriter, known for his work on films such as Alien, Gladiator, and The Martian.",
-//       "Birth": "November 30, 1937"
-//     },
-//     "Featured": false
-//   },
-//   {
-//     "Title": "Shutter Island",
-//     "Description": "A U.S. Marshal investigates the disappearance of a patient from a mental hospital located on an isolated island, only to uncover disturbing truths about the island's secrets.",
-//     "Genre": {
-//       "Name": "Mystery, Thriller",
-//       "Description": "Mystery is a genre involving a crime or puzzle to be solved, and Thriller is focused on intense excitement and suspense, often with psychological elements."
-//     },
-//     "Director": {
-//       "Name": "Martin Scorsese",
-//       "Bio": "Martin Scorsese is an American film director, producer, screenwriter, and actor, widely regarded as one of the greatest directors in the history of cinema.",
-//       "Birth": "November 17, 1942"
-//     },
-//     "Featured": false
-//   }
-// ];
 ];
 
 
@@ -218,7 +77,7 @@ app.get('/documentation', (req, res) => {
 });
 
 
-app.get('/movies', async (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
@@ -230,7 +89,7 @@ app.get('/movies', async (req, res) => {
 });
 
 
-app.get('/movies/:title', (req, res) => {
+app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ title: req.params.title })
     .then((movie) => {
       res.json(movie);
@@ -244,7 +103,7 @@ app.get('/movies/:title', (req, res) => {
 
 
 
-app.get('/movies/genre/:genreName', (req, res) => {
+app.get('/movies/genre/:genreName', passport.authenticate('jwt', { session: false }), (req, res) => {
   const { genreName } = req.params;
   const genre = movies.find(movie => movie.Genre.Name.toLowerCase() === genreName.toLowerCase()).Genre;
 
@@ -254,7 +113,7 @@ app.get('/movies/genre/:genreName', (req, res) => {
     res.status(400).send('no such genre')
   }
 });
-app.get('/movies/director/:directorName', (req, res) => {
+app.get('/movies/director/:directorName', passport.authenticate('jwt', { session: false }), (req, res) => {
   const { directorName } = req.params;
   const director = movies.find(movie => movie.Director.Name.toLowerCase() === directorName.toLowerCase()).Director;
 
@@ -266,7 +125,7 @@ app.get('/movies/director/:directorName', (req, res) => {
 });
 
 
-app.get('/users', async (req, res) => {
+app.get('/users', passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Users.find()
     .then((users) => {
       res.status(201).json(users);
@@ -278,7 +137,7 @@ app.get('/users', async (req, res) => {
 });
 
 // Getting a SINGLE user by their username:
-app.get('/users/:Username', async (req, res) => {
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Users.findOne({ Username: req.params.Username })
     .then((user) => {
       res.json(user);
@@ -306,7 +165,8 @@ app.post('/users',
     check('Username', 'Username is required').isLength({min: 5}),
     check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
     check('Password', 'Password is required').not().isEmpty(),
-    check('Email', 'Email does not appear to be valid').isEmail()
+    check('Email', 'Email does not appear to be valid').isEmail(),
+    check('Birthday', 'Birthday is required').not().isEmpty()
   ],
 
   async (req, res) => {
@@ -326,7 +186,7 @@ app.post('/users',
             Username: req.body.Username,
             Password: hashedPassword,
             Email: req.body.Email,
-            Birhtday: req.body.Birhtday
+            Birhtday: req.body.Birthday
           })
           .then((user) => { res.status(201).json(user) })
           .catch((error) => {
@@ -346,7 +206,7 @@ app.post('/users',
 
 
 //UPDATE commands
-app.put('/users/:id', (req, res) => {
+app.put('/users/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
   const { id } = req.params;
   const updatedUser = req.body;
   let user = users.find(user => user.id == id);
@@ -358,7 +218,7 @@ app.put('/users/:id', (req, res) => {
     res.status(400).send('user not found')
   }
 });
-app.post('/users/:id/:movieTitle', (req, res) => {
+app.post('/users/:id/:movieTitle', passport.authenticate('jwt', { session: false }), (req, res) => {
   const { id, movieTitle } = req.params;
 
   let user = users.find(user => user.id == id);
@@ -371,7 +231,7 @@ app.post('/users/:id/:movieTitle', (req, res) => {
   }
 });
 
-//The following is code that updates a users informtaion, expecting JSON format:
+
 app.put('/users/:Username', passport.authenticate('jwt', {session: false}), async (req, res) => {
   if(req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
@@ -399,7 +259,7 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}), asyn
 
 
 
-app.post('/directors', async (req, res) => {
+app.post('/directors', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const { Name, Bio, Birthday } = req.body;
 
   try {
@@ -423,7 +283,7 @@ app.post('/directors', async (req, res) => {
 });
 
 //The following adds a specific movie to a users list of favorite movies:
-app.post('/users/:Username/movies/:MovieID', async (req, res) => {
+app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
     $push: { FavoriteMovies: req.params.MovieID }
   },
@@ -440,7 +300,7 @@ app.post('/users/:Username/movies/:MovieID', async (req, res) => {
 
 
 //DELETE commands
-app.delete('/users/:id/:movieTitle', (req, res) => {
+app.delete('/users/:id/:movieTitle', passport.authenticate('jwt', { session: false }), (req, res) => {
   const { id, movieTitle } = req.params;
 
   let user = users.find(user => user.id == id);
@@ -449,10 +309,12 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
     user.favoriteMovies = user.favoriteMovies.filter(title => title !== movieTitle);
     res.status(200).send(`${movieTitle} has been removed from ${id}'s array`);
   } else {
-    res.status(400).send('user not found')
+    res.status(400).send('user not found');
   }
 });
-app.delete('/users/:id', (req, res) => {
+
+// DELETE user by ID
+app.delete('/users/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
   const { id } = req.params;
 
   let user = users.find(user => user.id == id);
@@ -461,13 +323,13 @@ app.delete('/users/:id', (req, res) => {
     users = users.filter(user => user.id != id);
     res.status(200).send(`user ${id} has been deleted`);
   } else {
-    res.status(400).send('user not found')
+    res.status(400).send('user not found');
   }
 });
 
 
 //The following is used to delete a user by its username:
-app.delete('/users/:Username', async (req, res) => {
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Users.findOneAndRemove({ Username: req.params.Username })
     .then((user) => {
       if (!user) {
