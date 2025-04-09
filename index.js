@@ -24,25 +24,6 @@ mongoose.connect(process.env.CONNECTION_URI, { serverSelectionTimeoutMS: 5000 })
 
 const cors = require('cors');
 app.use(cors());
-
-
-
-
-
-
-// app.use(cors({
-//   origin: (origin, callback) => {
-//     if(!origin) return callback(null, true);
-//     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-//       let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
-//       return callback(new Error(message ), false);
-//     }
-//     return callback(null, true);
-//   }
-// }));
-
-
-
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
@@ -170,12 +151,14 @@ app.post('/users',
   ],
 
   async (req, res) => {
-    let errors = validationResults(req);
+    console.log("POST /users route hit");
+    let errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({errors: errors.array() });
     }
 
   let hashedPassword = Users.hashPassword(req.body.Password);
+
   await Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
@@ -186,7 +169,8 @@ app.post('/users',
             Username: req.body.Username,
             Password: hashedPassword,
             Email: req.body.Email,
-            Birhtday: req.body.Birthday
+            Birthday: req.body.Birthday,
+            isAdmin: false,
           })
           .then((user) => { res.status(201).json(user) })
           .catch((error) => {
@@ -279,6 +263,41 @@ app.post('/directors', passport.authenticate('jwt', { session: false }), async (
   } catch (err) {
     console.error(err);
     res.status(500).send('Error: ' + err);
+  }
+});
+
+
+app.post('/login', async (req, res) => {
+  const { Username, Password } = req.body;
+
+  try {
+    // Find the user by username
+    const user = await Users.findOne({ Username });
+    if (!user) {
+      return res.status(401).send('Invalid credentials');
+    }
+
+    // Check if the password is correct (compare with hashed password in the DB)
+    const isMatch = await user.validatePassword(Password);
+    if (!isMatch) {
+      return res.status(401).send('Invalid credentials');
+    }
+
+    const token = generateJWTToken(user);
+
+    res.status(200).json({
+      token,
+      user: {
+        _id: user._id,
+        Username: user.Username,
+        Email: user.Email,
+        FavoriteMovies: user.FavoriteMovies,
+        isAdmin: user.isAdmin,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
   }
 });
 
