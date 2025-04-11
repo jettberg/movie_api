@@ -5,12 +5,20 @@ const passport = require('passport');
 require('./passport');
 
 let generateJWTToken = (user) => {
-    return jwt.sign(user, jwtSecret, {
-        subject: user.Username,
-        expiresIn: '7d',
-        algorithm: 'HS256'
-    });
-}
+    return jwt.sign(
+        {
+            _id: user._id,
+            Username: user.Username,
+            isAdmin: user.isAdmin
+        },
+        process.env.JWT_SECRET,
+        {
+            subject: user.Username,
+            expiresIn: '7d',
+            algorithm: 'HS256'
+        }
+    );
+};
 
 module.exports = (router) => {
     router.post('/login', (req, res) => {

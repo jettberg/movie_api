@@ -15,7 +15,7 @@ const Genres = Models.Genre;
 const Directors = Models.Director;
 const {check, validationResult} = require('express-validator');
 
-mongoose.connect(process.env.CONNECTION_URI, { serverSelectionTimeoutMS: 5000 })
+mongoose.connect(process.env.CONNECTION_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
 

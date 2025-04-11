@@ -4,23 +4,6 @@ const passport = require('passport'),
     passportJWT = require('passport-jwt');
 
 
-    let generateJWTToken = (user) => {
-        return jwt.sign(
-            {
-                _id: user._id,
-                Username: user.Username,
-                isAdmin: user.isAdmin
-            },
-            process.env.JWT_SECRET,
-            {
-                subject: user.Username,
-                expiresIn:'7d',
-                algorithm: 'HS256'
-            }
-        );
-    };
-
-
 let Users = Models.User,
     JWTStrategy = passportJWT.Strategy,
     ExtractJWT = passportJWT.ExtractJwt;
@@ -42,12 +25,13 @@ passport.use(
                         });
                     }
 
+                    console.log('User found:', user.Username);
+                    console.log('Has ValidatePassword:', typeof user.validatePassword);
+
                     if (!user.validatePassword(password)) {
                         console.log('incorrect password');
-                        return callback(null, false, {message: 'Incorrect password'});
+                        return callback(null, false, { message: 'Incorrect password' });
                     }
-
-                    const token = generateJWTToken(user);
 
                     console.log('finished');
                     return callback(null, user);
