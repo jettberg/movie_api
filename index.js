@@ -1,8 +1,11 @@
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
+const cors = require('cors');
 
 const mongoose = require('mongoose');
 const Models = require('./models.js');
@@ -12,42 +15,19 @@ const Genres = Models.Genre;
 const Directors = Models.Director;
 const {check, validationResult} = require('express-validator');
 
-// mongoose.connect('mongodb://localhost:27017/myFlix', { useNewUrlParser: true, useUnifiedTopology: true })
-//   .then(() => console.log('Connected to MongoDB'))
-//   .catch((err) => console.error('MongoDB connection error:', err));
-
-//The code above was changed from the localhost of my computer to heroku/mongoDB in the following:
-
 mongoose.connect(process.env.CONNECTION_URI, { serverSelectionTimeoutMS: 5000 })
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
-const cors = require('cors');
+
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
-let auth = require('./auth')(app);
+require('./auth')(app);
 const passport = require('passport');
 require('./passport');
-
-let users = [
-  {
-    id: 1,
-    name: "Kim",
-    favoriteMovies: []
-  },
-  {
-    id: 2,
-    name: "Joe",
-    favoriteMovies: ["Inception"]
-  },
-
-];
-const movies = [
-];
-
 
 
 app.get('/', (req, res) => {
@@ -267,39 +247,39 @@ app.post('/directors', passport.authenticate('jwt', { session: false }), async (
 });
 
 
-app.post('/login', async (req, res) => {
-  const { Username, Password } = req.body;
+// app.post('/login', async (req, res) => {
+//   const { Username, Password } = req.body;
 
-  try {
-    // Find the user by username
-    const user = await Users.findOne({ Username });
-    if (!user) {
-      return res.status(401).send('Invalid credentials');
-    }
+//   try {
+//     // Find the user by username
+//     const user = await Users.findOne({ Username });
+//     if (!user) {
+//       return res.status(401).send('Invalid credentials');
+//     }
 
-    // Check if the password is correct (compare with hashed password in the DB)
-    const isMatch = await user.validatePassword(Password);
-    if (!isMatch) {
-      return res.status(401).send('Invalid credentials');
-    }
+//     // Check if the password is correct (compare with hashed password in the DB)
+//     const isMatch = await user.validatePassword(Password);
+//     if (!isMatch) {
+//       return res.status(401).send('Invalid credentials');
+//     }
 
-    const token = generateJWTToken(user);
+//     const token = generateJWTToken(user);
 
-    res.status(200).json({
-      token,
-      user: {
-        _id: user._id,
-        Username: user.Username,
-        Email: user.Email,
-        FavoriteMovies: user.FavoriteMovies,
-        isAdmin: user.isAdmin,
-      },
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error');
-  }
-});
+//     res.status(200).json({
+//       token,
+//       user: {
+//         _id: user._id,
+//         Username: user.Username,
+//         Email: user.Email,
+//         FavoriteMovies: user.FavoriteMovies,
+//         isAdmin: user.isAdmin,
+//       },
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Server error');
+//   }
+// });
 
 //The following adds a specific movie to a users list of favorite movies:
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res) => {
@@ -374,14 +354,6 @@ app.use((err, req, res, next) => {
   res.status(500).send('Oops! Something went wrong!');
 });
 
-
-
-
-
-// This is the old app.listen() code before updating it to the heroku platform
-// app.listen(8080, () => {
-//   console.log('Your app is listening on port 8080.');
-// });
 
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
