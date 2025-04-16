@@ -284,14 +284,31 @@ app.post('/users/:username/movies/:movieId', passport.authenticate('jwt', { sess
     });
 });
 // Remove movie from favorites
+// app.delete('/users/:username/movies/:movieId', passport.authenticate('jwt', { session: false }), (req, res) => {
+//   Users.findOneAndUpdate(
+//     { Username: req.params.username },
+//     { $pull: { FavoriteMovies: req.params.movieId } },
+//     { new: true }
+//   )
+//     .then((updatedUser) => res.json(updatedUser))
+//     .catch((err) => res.status(500).send(err));
+// });
 app.delete('/users/:username/movies/:movieId', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const movieObjectId = new mongoose.Types.ObjectId(req.params.movieId);
+
   Users.findOneAndUpdate(
     { Username: req.params.username },
-    { $pull: { FavoriteMovies: req.params.movieId } },
+    { $pull: { FavoriteMovies: movieObjectId } },
     { new: true }
   )
-    .then((updatedUser) => res.json(updatedUser))
-    .catch((err) => res.status(500).send(err));
+    .then((updatedUser) => {
+      if (!updatedUser) return res.status(404).send('User not found');
+      res.json(updatedUser);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
 
