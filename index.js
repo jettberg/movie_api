@@ -6,6 +6,8 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
 const cors = require('cors');
+let allowedOrigins = ['http://localhost:1234', 'http://localhost:8080', 
+  'https://movies-my-flix-application-7f3ae970a7e3.herokuapp.com/', ];
 
 const mongoose = require('mongoose');
 const Models = require('./models.js');
@@ -20,7 +22,18 @@ mongoose.connect(process.env.CONNECTION_URI)
   .catch((err) => console.error('MongoDB connection error:', err));
 
 
-app.use(cors());
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) { // If a specific origin isn’t found on the list of allowed origins
+      let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+      return callback(new Error(message), false);
+    }
+    return callback(null, true);
+  }
+}));
+
+
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
@@ -198,7 +211,7 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}), asyn
       Birthday: req.body.Birthday
     }
   },
-    { new: true }) // This line makes sure that the updated document is returned
+    { new: true }) // This line makes sure that the updated doFcument is returned
     .then((updatedUser) => {
       res.json(updatedUser);
     })
