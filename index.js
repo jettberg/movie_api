@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const uuid = require('uuid');
 const cors = require('cors');
 let allowedOrigins = ['http://localhost:1234', 'http://localhost:8080', 
-  'https://movies-my-flix-application-7f3ae970a7e3.herokuapp.com/', 'myflixapibase.netlify.app',
+  'https://movies-my-flix-application-7f3ae970a7e3.herokuapp.com/', 'https://myflixapibase.netlify.app',
  ];
 
 const mongoose = require('mongoose');
