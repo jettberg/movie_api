@@ -9,15 +9,14 @@ const cors = require('cors');
 let allowedOrigins = ['http://localhost:1234', 'http://localhost:8080', 
   'https://movies-my-flix-application-7f3ae970a7e3.herokuapp.com/', 'https://myflixapibase.netlify.app',
  ];
-const { validationResult } = require('express-validator');
-
+const {check, validationResult} = require('express-validator');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director;
-const {check, validationResult} = require('express-validator');
+
 
 mongoose.connect(process.env.CONNECTION_URI)
   .then(() => console.log('Connected to MongoDB'))
