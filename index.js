@@ -9,6 +9,7 @@ const cors = require('cors');
 let allowedOrigins = ['http://localhost:1234', 'http://localhost:8080', 
   'https://movies-my-flix-application-7f3ae970a7e3.herokuapp.com/', 'https://myflixapibase.netlify.app',
  ];
+const { validationResult } = require('express-validator');
 
 const mongoose = require('mongoose');
 const Models = require('./models.js');
