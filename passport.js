@@ -25,9 +25,12 @@ passport.use(
                         });
                     }
 
+                    console.log('User found:', user.Username);
+                    console.log('Has ValidatePassword:', typeof user.validatePassword);
+
                     if (!user.validatePassword(password)) {
                         console.log('incorrect password');
-                        return callback(null, false, {message: 'Incorrect password'});
+                        return callback(null, false, { message: 'Incorrect password' });
                     }
 
                     console.log('finished');
