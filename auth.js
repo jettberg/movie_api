@@ -1,4 +1,4 @@
-const jwtSecret = 'your_jwt_secret';
+const jwtSecret = process.env.JWT_SECRET || 'your_jwt_secret';
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
@@ -11,7 +11,7 @@ let generateJWTToken = (user) => {
             Username: user.Username,
             isAdmin: user.isAdmin
         },
-        process.env.JWT_SECRET,
+        jwtSecret,
         {
             subject: user.Username,
             expiresIn: '7d',
