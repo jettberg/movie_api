@@ -299,19 +299,31 @@ app.post('/directors', passport.authenticate('jwt', { session: false }), async (
 // });
 
 //The following adds a specific movie to a users list of favorite movies:
-app.post('/users/:username/movies/:movieId', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  await Users.findOneAndUpdate({ Username: req.params.Username }, {
-    $push: { FavoriteMovies: req.params.MovieId }
-  },
-    { new: true })
-    .then((updatedUser) => {
+app.post(
+  '/users/:username/movies/:movieId',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try {
+      // Optional: enforce user can only modify their own favorites
+      if (req.user.Username !== req.params.username) {
+        return res.status(403).send('Permission denied');
+      }
+
+      const updatedUser = await Users.findOneAndUpdate(
+        { Username: req.params.username },
+        { $addToSet: { FavoriteMovies: req.params.movieId } }, // addToSet prevents duplicates
+        { new: true }
+      ).select('-Password');
+
+      if (!updatedUser) return res.status(404).send('User not found');
+
       res.json(updatedUser);
-    })
-    .catch((err) => {
+    } catch (err) {
       console.error(err);
-      res.status(500).send('Error ' + err);
-    });
-});
+      res.status(500).send('Error: ' + err);
+    }
+  }
+);
 // Remove movie from favorites
 // app.delete('/users/:username/movies/:movieId', passport.authenticate('jwt', { session: false }), (req, res) => {
 //   Users.findOneAndUpdate(
