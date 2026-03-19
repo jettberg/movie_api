@@ -22,20 +22,8 @@ mongoose.connect(process.env.CONNECTION_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
-  app.use(cors());
-//cant get the following code to run properly so i am still testing this out to get the wrinkles out
-// app.use(cors({
-//   origin: (origin, callback) => {
-//     if (!origin) return callback(null, true);
-//     if (allowedOrigins.indexOf(origin) === -1) { // If a specific origin isn’t found on the list of allowed origins
-//       let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
-//       return callback(new Error(message), false);
-//     }
-//     return callback(null, true);
-//   }
-// }));
-
-
+const cors = require('cors');
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
@@ -53,7 +41,12 @@ app.get('/documentation', (req, res) => {
 });
 
 
-app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
+
+
+//READ commands
+
+
+app.get('/movies', passport.authenticate('jwt', {session: false}), async (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
@@ -65,7 +58,7 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), async (req,
 });
 
 
-app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies/:title', (req, res) => {
   Movies.findOne({ title: req.params.title })
     .then((movie) => {
       res.json(movie);
@@ -135,6 +128,7 @@ app.get('/users/:username', passport.authenticate('jwt', { session: false }), as
 
 //CREATE commands
 
+//Adding a user
 app.post('/users', 
   
   [
