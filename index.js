@@ -244,40 +244,6 @@ app.post('/directors', passport.authenticate('jwt', { session: false }), async (
 });
 
 
-// app.post('/login', async (req, res) => {
-//   const { Username, Password } = req.body;
-
-//   try {
-//     // Find the user by username
-//     const user = await Users.findOne({ Username });
-//     if (!user) {
-//       return res.status(401).send('Invalid credentials');
-//     }
-
-//     // Check if the password is correct (compare with hashed password in the DB)
-//     const isMatch = await user.validatePassword(Password);
-//     if (!isMatch) {
-//       return res.status(401).send('Invalid credentials');
-//     }
-
-//     const token = generateJWTToken(user);
-
-//     res.status(200).json({
-//       token,
-//       user: {
-//         _id: user._id,
-//         Username: user.Username,
-//         Email: user.Email,
-//         FavoriteMovies: user.FavoriteMovies,
-//         isAdmin: user.isAdmin,
-//       },
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Server error');
-//   }
-// });
-
 //The following adds a specific movie to a users list of favorite movies:
 app.post('/users/:username/movies/:movieId', passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Users.findOneAndUpdate({ Username: req.params.Username }, {
@@ -292,16 +258,8 @@ app.post('/users/:username/movies/:movieId', passport.authenticate('jwt', { sess
       res.status(500).send('Error ' + err);
     });
 });
+
 // Remove movie from favorites
-// app.delete('/users/:username/movies/:movieId', passport.authenticate('jwt', { session: false }), (req, res) => {
-//   Users.findOneAndUpdate(
-//     { Username: req.params.username },
-//     { $pull: { FavoriteMovies: req.params.movieId } },
-//     { new: true }
-//   )
-//     .then((updatedUser) => res.json(updatedUser))
-//     .catch((err) => res.status(500).send(err));
-// });
 app.delete('/users/:username/movies/:movieId', passport.authenticate('jwt', { session: false }), (req, res) => {
   const movieObjectId = new mongoose.Types.ObjectId(req.params.movieId);
 
